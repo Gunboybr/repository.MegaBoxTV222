@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="PLAYERS">
+	<setting label="[COLOR green]Escolha seu gerenciador TORRENT:[/COLOR]" type="lsep" /> 
+        <setting type="sep" />
+        <setting id="plugin" type="labelenum" values="Pulsar|Quasar" label="[B][COLOR gold]PLAYER =>[/B][/COLOR]" default="Quasar" />		
+	</category>	
+</settings>
