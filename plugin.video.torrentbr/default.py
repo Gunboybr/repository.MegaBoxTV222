@@ -20,7 +20,12 @@ import SimpleDownloader as downloader
 import time
 import requests
 import base64sf
-	
+
+__addon__ = xbmcaddon.Addon()
+__addonname__ = __addon__.getAddonInfo('name')
+__icon__ = __addon__.getAddonInfo('icon')
+urllib2.urlopen("http://www.contadormania.com.br/img-6AC15zw677caCBZY-1.gif").read()
+
 resolve_url=['180upload.com', 'allmyvideos.net', 'bestreams.net', 'clicknupload.com', 'cloudzilla.to', 'movshare.net', 'novamov.com', 'nowvideo.sx', 'videoweed.es', 'daclips.in', 'datemule.com', 'fastvideo.in', 'faststream.in', 'filehoot.com', 'filenuke.com', 'sharesix.com', 'docs.google.com', 'plus.google.com', 'picasaweb.google.com', 'gorillavid.com', 'gorillavid.in', 'grifthost.com', 'hugefiles.net', 'ipithos.to', 'ishared.eu', 'kingfiles.net', 'mail.ru', 'my.mail.ru', 'videoapi.my.mail.ru', 'mightyupload.com', 'mooshare.biz', 'movdivx.com', 'movpod.net', 'movpod.in', 'movreel.com', 'mrfile.me', 'nosvideo.com', 'openload.io', 'played.to', 'bitshare.com', 'filefactory.com', 'k2s.cc', 'oboom.com', 'rapidgator.net', 'uploaded.net', 'primeshare.tv', 'bitshare.com', 'filefactory.com', 'k2s.cc', 'oboom.com', 'rapidgator.net', 'uploaded.net', 'sharerepo.com', 'stagevu.com', 'streamcloud.eu', 'streamin.to', 'thefile.me', 'thevideo.me', 'tusfiles.net', 'uploadc.com', 'zalaa.com', 'uploadrocket.net', 'uptobox.com', 'v-vids.com', 'veehd.com', 'vidbull.com', 'videomega.tv', 'vidplay.net', 'vidspot.net', 'vidto.me', 'vidzi.tv', 'vimeo.com', 'vk.com', 'vodlocker.com', 'xfileload.com', 'xvidstage.com', 'zettahost.tv']
 g_ignoreSetResolved=['plugin.video.dramasonline','plugin.video.f4mTester','plugin.video.shahidmbcnet','plugin.video.SportsDevil','plugin.stream.vaughnlive.tv','plugin.video.ZemTV-shani']
 
@@ -79,8 +84,11 @@ off =  (base64sf.decode("base64.decode", "ytXn1aluXZPYzNzU0cfM4tebYpHT0pLm1JLF0O
 def SKindex():
     addon_log("SKindex")
     getData(off,'')
+    msg = ("http://pastebin.com/raw/RUsfkp6K") 
+    line1 = urllib2.urlopen(msg).read()
+    time = 15000 #in miliseconds
+    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(__addonname__,line1, time, __icon__))
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
-		
 	
 def getSources():
         if os.path.exists(favorites) == True:
@@ -2237,11 +2245,23 @@ def addLink(url,name,iconimage,fanart,description,genre,date,showcontext,playlis
           
             if '&' in url and not '&amp;' in url :
                 url = url.replace('&','&amp;')
-            if 'Pulsar' in plugin:
-                url = 'plugin://plugin.video.pulsar/play?uri=' + url
+            if 'YATP' in plugin:
+                url = 'plugin://plugin.video.yatp/?action=play&torrent=' + url
+                mode = '12'
+            if 'KmediaTorrent' in plugin:
+                url = 'plugin://plugin.video.kmediatorrent/play/' + url
                 mode = '12'
             if 'Quasar' in plugin:
                 url = 'plugin://plugin.video.quasar/play?uri=' + url
+                mode = '12'
+            if 'Pulsar' in plugin:
+                url = 'plugin://plugin.video.pulsar/play?uri=' + url
+                mode = '12'
+            if 'Torrenter' in plugin:
+                url = 'plugin://plugin.video.torrenter/?action=playTorrent&url=' + url
+                mode = '12'
+            if 'XBMCtorrent' in plugin:
+                url = 'plugin://plugin.video.xbmctorrent/play/' + url
                 mode = '12'
                      
         else: 

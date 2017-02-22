@@ -3,8 +3,7 @@
     <category label="Players">
 	    <setting label="[B][COLOR blue]Selecione abaixo seu gerenciador de torrents[/B][/COLOR]" type="lsep" /> 
 	    <setting type="sep" />
-        <setting label="32054" type="labelenum" id="plugin" default="Quasar" values="Pulsar|Quasar"/>
-		<setting label="[B][COLOR blue]Se optar por usar Acestream,digite abaixo o caminho do seu executável[/B][/COLOR]" type="lsep"/>
+        <setting label="32054" type="labelenum" id="plugin" default="Quasar" values="Pulsar|Quasar|YATP|KmediaTorrent|Torrenter|XBMCtorrent"/>
 		<setting type="sep" />
 	    <setting label="32057" type="lsep"/>
 	    <setting label="32058" type="lsep"/>
