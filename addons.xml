@@ -447,7 +447,7 @@
   </extension>
 </addon>
 
-<addon id="xbmc.python" version="2.14.0" provider-name="Team XBMC">
+<addon id="xbmc.python" version="2.25.0" provider-name="Team Kodi">
   <backwards-compatibility abi="2.1.0"/>
   <requires>
     <import addon="xbmc.core" version="0.1.0"/>
@@ -458,5 +458,6 @@
   <extension-point id="weather" schema="script.xsd"/>
   <extension-point id="library" schema="script.xsd"/>
   <extension-point id="plugin" schema="pluginsource.xsd"/>
+  <extension-point id="context.item" schema="contextitem.xsd"/>
 </addon>
 </addons>
