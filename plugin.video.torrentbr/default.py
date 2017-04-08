@@ -21,12 +21,13 @@ import time
 import requests
 import base64sf
 
+
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __icon__ = __addon__.getAddonInfo('icon')
 
 resolve_url=['180upload.com', 'allmyvideos.net', 'bestreams.net', 'clicknupload.com', 'cloudzilla.to', 'movshare.net', 'novamov.com', 'nowvideo.sx', 'videoweed.es', 'daclips.in', 'datemule.com', 'fastvideo.in', 'faststream.in', 'filehoot.com', 'filenuke.com', 'sharesix.com', 'docs.google.com', 'plus.google.com', 'picasaweb.google.com', 'gorillavid.com', 'gorillavid.in', 'grifthost.com', 'hugefiles.net', 'ipithos.to', 'ishared.eu', 'kingfiles.net', 'mail.ru', 'my.mail.ru', 'videoapi.my.mail.ru', 'mightyupload.com', 'mooshare.biz', 'movdivx.com', 'movpod.net', 'movpod.in', 'movreel.com', 'mrfile.me', 'nosvideo.com', 'openload.io', 'played.to', 'bitshare.com', 'filefactory.com', 'k2s.cc', 'oboom.com', 'rapidgator.net', 'uploaded.net', 'primeshare.tv', 'bitshare.com', 'filefactory.com', 'k2s.cc', 'oboom.com', 'rapidgator.net', 'uploaded.net', 'sharerepo.com', 'stagevu.com', 'streamcloud.eu', 'streamin.to', 'thefile.me', 'thevideo.me', 'tusfiles.net', 'uploadc.com', 'zalaa.com', 'uploadrocket.net', 'uptobox.com', 'v-vids.com', 'veehd.com', 'vidbull.com', 'videomega.tv', 'vidplay.net', 'vidspot.net', 'vidto.me', 'vidzi.tv', 'vimeo.com', 'vk.com', 'vodlocker.com', 'xfileload.com', 'xvidstage.com', 'zettahost.tv']
-g_ignoreSetResolved=['plugin.video.dramasonline','plugin.video.f4mTester','plugin.video.shahidmbcnet','plugin.video.SportsDevil','plugin.stream.vaughnlive.tv','plugin.video.ZemTV-shani']
+g_ignoreSetResolved=['plugin.video.dramasonline','plugin.video.f4mTester','plugin.video.shahidmbcnet','plugin.video.SportsDevil','plugin.stream.vaughnlive.tv','plugin.video.ZemTV-shani','plugin://plugin.video.youtube/kodion/search/input','plugin.video.quasar/search']
 
 class NoRedirection(urllib2.HTTPErrorProcessor):
    def http_response(self, request, response):
@@ -57,7 +58,7 @@ else: SOURCES = []
 
 def addon_log(string):
     if debug == 'true':
-        xbmc.log("[addon.live.SimpleKore Lists-%s]: %s" %(addon_version, string))
+        xbmc.log("[addon.live.TorrentBR Lists-%s]: %s" %(addon_version, string))
 
 
 def makeRequest(url, headers=None):
@@ -73,11 +74,11 @@ def makeRequest(url, headers=None):
             addon_log('URL: '+url)
             if hasattr(e, 'code'):
                 addon_log('We failed with error code - %s.' % e.code)
-                xbmc.executebuiltin("XBMC.Notification(SimpleKore,We failed with error code - "+str(e.code)+",10000,"+icon+")")
+                xbmc.executebuiltin("XBMC.Notification(TorrentBR,We failed with error code - "+str(e.code)+",10000,"+icon+")")
             elif hasattr(e, 'reason'):
                 addon_log('We failed to reach a server.')
                 addon_log('Reason: %s' %e.reason)
-                xbmc.executebuiltin("XBMC.Notification(SimpleKore,We failed to reach a server. - "+str(e.reason)+",10000,"+icon+")")
+                xbmc.executebuiltin("XBMC.Notification(TorrentBR,We failed to reach a server. - "+str(e.reason)+",10000,"+icon+")")
 off =  (base64sf.decode("base64.decode", "ytXn1aluXZPM0t6SzM6Qq76BaICphQ=="))
 				
 def SKindex():
@@ -103,7 +104,7 @@ def getSources():
         if addon.getSetting("searchDM") == "true":
             addDir('Search:dailymotion','dmotion',25,icon,FANART,'','','','')
         if addon.getSetting("PulsarM") == "true":
-            addDir('Pulsar:IMDB','IMDBidplay',27,icon,FANART,'','','','')            
+            addDir('Quasar:IMDB','IMDBidplay',27,icon,FANART,'','','','')            
         if os.path.exists(source_file)==True:
             sources = json.loads(open(source_file,"r").read())
             #print 'sources',sources
@@ -212,7 +213,7 @@ def addSource(url=None):
             b.close()
         addon.setSetting('new_url_source', "")
         addon.setSetting('new_file_source', "")
-        xbmc.executebuiltin("XBMC.Notification(SimpleKore,New source added.,5000,"+icon+")")
+        xbmc.executebuiltin("XBMC.Notification(TorrentBR,New source added.,5000,"+icon+")")
         if not url is None:
             if 'xbmcplus.xb.funpic.de' in url:
                 xbmc.executebuiltin("XBMC.Container.Update(%s?mode=14,replace)" %sys.argv[0])
@@ -526,7 +527,7 @@ def GetSublinks(name,url,iconimage,fanart):
             pass
     else:
          dialog=xbmcgui.Dialog()
-         rNo=dialog.select('SimpleKore Select A Source', List)
+         rNo=dialog.select('TorrentBR Select A Source', List)
          if rNo>=0:
              rName=name
              rURL=str(ListU[rNo])
@@ -559,7 +560,7 @@ def SearchChannels():
     ReadChannel = 0
     FoundMatch = 0
     progress = xbmcgui.DialogProgress()
-    progress.create('SimpleKore Searching Please wait',' ')
+    progress.create('TorrentBR Searching Please wait',' ')
 	
     while FoundChannel <> ReadChannel:
         BaseSearch = List[ReadChannel].strip()
@@ -773,11 +774,13 @@ def getItems(items,fanart):
                 elif len(item('f4m')) >0:
                         for i in item('f4m'):
                             if not i.string == None:
+
                                 if '.f4m' in i.string:
                                     f4m = 'plugin://plugin.video.f4mTester/?url='+urllib.quote_plus(i.string)
                                 elif '.m3u8' in i.string:
                                     f4m = 'plugin://plugin.video.f4mTester/?url='+urllib.quote_plus(i.string)+'&amp;streamtype=HLS'
-                                    
+                                elif '.ts' in i.string:
+                                    f4m = 'plugin://plugin.video.f4mTester/?url='+urllib.quote_plus(i.string)+'&amp;streamtype=TSDOWNLOADER&amp;name='+name                                    
                                 else:
                                     f4m = 'plugin://plugin.video.f4mTester/?url='+urllib.quote_plus(i.string)+'&amp;streamtype=SIMPLE'
                         url.append(f4m)
@@ -1937,12 +1940,12 @@ def urlsolver(url):
     try:
         import genesisresolvers
     except Exception:
-        xbmc.executebuiltin("XBMC.Notification(SimpleKore,Please enable Update Commonresolvers to Play in Settings. - ,10000)")
+        xbmc.executebuiltin("XBMC.Notification(TorrentBR,Please enable Update Commonresolvers to Play in Settings. - ,10000)")
 
     resolved=genesisresolvers.get(url).result
     if url == resolved or resolved is None:
         #import
-        xbmc.executebuiltin("XBMC.Notification(SimpleKore,Using Urlresolver module.. - ,5000)")
+        xbmc.executebuiltin("XBMC.Notification(TorrentBR,Using Urlresolver module.. - ,5000)")
         import urlresolver
         host = urlresolver.HostedMediaFile(url)
         if host:
@@ -2000,12 +2003,12 @@ def play_playlist(name, mu_playlist):
 
 def download_file(name, url):
         if addon.getSetting('save_location') == "":
-            xbmc.executebuiltin("XBMC.Notification('SimpleKore','Choose a location to save files.',15000,"+icon+")")
+            xbmc.executebuiltin("XBMC.Notification('TorrentBR','Choose a location to save files.',15000,"+icon+")")
             addon.openSettings()
         params = {'url': url, 'download_path': addon.getSetting('save_location')}
         downloader.download(name, params)
         dialog = xbmcgui.Dialog()
-        ret = dialog.yesno('SimpleKore', 'Do you want to add this file as a source?')
+        ret = dialog.yesno('TorrentBR', 'Do you want to add this file as a source?')
         if ret:
             addSource(os.path.join(addon.getSetting('save_location'), name))
 
@@ -2139,7 +2142,7 @@ def search(site_name,search_term=None):
                 SaveToFile(history,page_data,append=True)
                 return url
         else:
-            xbmc.executebuiltin("XBMC.Notification(SimpleKore,No IMDB match found ,7000,"+icon+")")
+            xbmc.executebuiltin("XBMC.Notification(TorrentBR,No IMDB match found ,7000,"+icon+")")
 ## Lunatixz PseudoTV feature
 def ascii(string):
     if isinstance(string, basestring):
@@ -2240,6 +2243,10 @@ def addLink(url,name,iconimage,fanart,description,genre,date,showcontext,playlis
             if addon.getSetting('dlaudioonly') == 'true':
                 contextMenu.append(('!!Download [COLOR seablue]Audio!![/COLOR]','XBMC.RunPlugin(%s?url=%s&mode=24&name=%s)'
                                         %(sys.argv[0], urllib.quote_plus(url), urllib.quote_plus(name))))                                     
+        elif url.startswith('tbusca') or 'tbusca' in url:
+            if 'Quasar' in plugin:
+                url = 'plugin://plugin.video.quasar/search'
+                mode = '54'
         elif url.startswith('magnet:?xt=') or '.torrent' in url:
           
             if '&' in url and not '&amp;' in url :
@@ -2262,7 +2269,6 @@ def addLink(url,name,iconimage,fanart,description,genre,date,showcontext,playlis
             if 'XBMCtorrent' in plugin:
                 url = 'plugin://plugin.video.xbmctorrent/play/' + url
                 mode = '12'
-                     
         else: 
             mode = '12'
       
@@ -2546,13 +2552,13 @@ elif mode==17:
     if url:
         playsetresolved(url,name,iconimage,setresolved)
     else:
-        xbmc.executebuiltin("XBMC.Notification(SimpleKore ,Failed to extract regex. - "+"this"+",4000,"+icon+")")
+        xbmc.executebuiltin("XBMC.Notification(TorrentBR ,Failed to extract regex. - "+"this"+",4000,"+icon+")")
 elif mode==18:
     addon_log("youtubedl")
     try:
         import youtubedl
     except Exception:
-        xbmc.executebuiltin("XBMC.Notification(SimpleKore,Please [COLOR yellow]install the Youtube Addon[/COLOR] module ,10000,"")")
+        xbmc.executebuiltin("XBMC.Notification(TorrentBR,Please [COLOR yellow]install the Youtube Addon[/COLOR] module ,10000,"")")
     stream_url=youtubedl.single_YD(url)
     playsetresolved(stream_url,name,iconimage)
 elif mode==19:
@@ -2593,3 +2599,7 @@ elif mode==53:
     addon_log("Requesting JSON-RPC Items")
     pluginquerybyJSON(url)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
+
+elif mode==54:
+    addon_log("Burst")    
+    xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
