@@ -515,7 +515,7 @@ def GetSublinks(name,url,iconimage,fanart):
         vurl = a.replace('sublink:','').replace('#','')
         #print vurl, name,iconimage,
         if len(vurl) > 10:
-           c=c+1; List.append(name+ ' Source ['+str(c)+']'); ListU.append(vurl)
+           c=c+1; List.append(' Link ['+str(c)+']' +name); ListU.append(vurl)
  
     if c==1:
         try:
@@ -527,15 +527,36 @@ def GetSublinks(name,url,iconimage,fanart):
             pass
     else:
          dialog=xbmcgui.Dialog()
-         rNo=dialog.select('TorrentBR Select A Source', List)
+         rNo=dialog.select('-=TorrentBR=- Selecione [COLOR white]Link[1][/COLOR][COLOR cyan]=720P[/COLOR] ou [COLOR white]Link[2][/COLOR][COLOR cyan]=1080P[/COLOR]', List)
          if rNo>=0:
              rName=name
              rURL=str(ListU[rNo])
              #print 'Sublinks   Name:' + name + '   url:' + rURL
+        
+             if 'Quasar' in plugin:
+                 url2 = 'plugin://plugin.video.quasar/play?uri=' + rURL
+                 mode = '12'
+             if 'YATP' in plugin:
+                 url2 = 'plugin://plugin.video.yatp/?action=play&torrent=' + rURL
+                 mode = '12'
+             if 'KmediaTorrent' in plugin:
+                 url2 = 'plugin://plugin.video.kmediatorrent/play/' + rURL
+                 mode = '12'
+             if 'Pulsar' in plugin:
+                 url2 = 'plugin://plugin.video.pulsar/play?uri=' + rURL
+                 mode = '12'
+             if 'Torrenter' in plugin:
+                 url2 = 'plugin://plugin.video.torrenter/?action=playTorrent&url=' + rURL
+                 mode = '12'
+             if 'XBMCtorrent' in plugin:
+                 url2 = 'plugin://plugin.video.xbmctorrent/play/' + rURL
+                 mode = '12'
+   
              try:
+
                  liz=xbmcgui.ListItem(name, iconImage=iconimage,thumbnailImage=iconimage); liz.setInfo( type="Video", infoLabels={ "Title": name } )
                  ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=rURL,listitem=liz)
-                 xbmc.Player().play(urlsolver(rURL), liz)
+                 xbmc.Player().play(url2)
              except:
                  pass
 
