@@ -532,7 +532,8 @@ def GetSublinks(name,url,iconimage,fanart):
              rName=name
              rURL=str(ListU[rNo])
              #print 'Sublinks   Name:' + name + '   url:' + rURL
-        
+             if '&' in rURL and not '&amp;' in rURL :
+                 rURL = rURL.replace('&','&amp;')      
              if 'Quasar' in plugin:
                  url2 = 'plugin://plugin.video.quasar/play?uri=' + rURL
                  mode = '12'
