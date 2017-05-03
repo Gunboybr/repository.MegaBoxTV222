@@ -555,9 +555,9 @@ def GetSublinks(name,url,iconimage,fanart):
    
              try:
 
-                 liz=xbmcgui.ListItem(name, iconImage=iconimage,thumbnailImage=iconimage); liz.setInfo( type="Video", infoLabels={ "Title": name } )
+                 liz=xbmcgui.ListItem(name, iconImage=iconimage,thumbnailImage=icon); liz.setInfo( type="Video", infoLabels={ "Title": name } )
                  ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=rURL,listitem=liz)
-                 xbmc.Player().play(url2)
+                 xbmc.Player().play(url2, liz)
              except:
                  pass
 
@@ -909,7 +909,7 @@ def getItems(items,fanart):
                     elif isJsonrpc:
                         addDir(name.encode('utf-8'),ext_url[0],53,thumbnail,fanart,desc,genre,date,None,'source')
                     elif url[0].find('sublink') > 0:
-                        addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,'','','','')
+                        addDir(name.encode('utf-8'),url[0],30,thumbnail,fanArt,desc,genre,date,None)
                         #addDir(name.encode('utf-8'),url[0],30,thumbnail,fanart,desc,genre,date,'sublink')				
                     else: 
                         addLink(url[0],name.encode('utf-8', 'ignore'),thumbnail,fanArt,desc,genre,date,True,None,regexs,total)
@@ -2265,6 +2265,13 @@ def addLink(url,name,iconimage,fanart,description,genre,date,showcontext,playlis
             if addon.getSetting('dlaudioonly') == 'true':
                 contextMenu.append(('!!Download [COLOR seablue]Audio!![/COLOR]','XBMC.RunPlugin(%s?url=%s&mode=24&name=%s)'
                                         %(sys.argv[0], urllib.quote_plus(url), urllib.quote_plus(name))))                                     
+        
+        elif '.m3u8' in url:
+                url = 'plugin://plugin.video.f4mTester/?url=' +url+ '&amp;streamtype=HLS&amp;name=TorrentBR'
+                mode = '12'
+        elif '.ts' in url:
+                url = 'plugin://plugin.video.f4mTester/?url=' +url+ '&amp;streamtype=TSDOWNLOADER&amp;name=TorrentBR'
+                mode = '12'
         elif url.startswith('tbusca') or 'tbusca' in url:
             if 'Quasar' in plugin:
                 url = 'plugin://plugin.video.quasar/search'
